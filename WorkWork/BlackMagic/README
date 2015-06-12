@@ -1,0 +1,30 @@
+ ____  _            _    _____       _       
+|  _ \| |          | |  |  __ \     (_)      
+| |_) | | __ _  ___| | _| |__) |__ _ _ _ __  
+|  _ <| |/ _` |/ __| |/ /  _  // _` | | '_ \ 
+| |_) | | (_| | (__|   <| | \ \ (_| | | | | |
+|____/|_|\__,_|\___|_|\_\_|  \_\__,_|_|_| |_|
+					  wow framework by seifer
+					  
+INSTALLATION INSTRUCTIONS
+=========================
+NOTE:
+You need BlackRain.dll, fasm_managed.dll, and BlackMagic.dll in your
+projects in order for BlackRain to function properly.
+
+HOW TO INSTALL
+
+	1 - Unzip all downloaded files into a folder.
+	2 - Run rain.exe, make it rain, and wait for confirmation to proceed.
+	3 - If rain.exe told you to continue, reference the following:
+		BlackMagic.dll
+		fasm_managed.dll
+		BlackRain.dll
+	4 - Add BlackRain.Common to your using references
+	5 - Find the Process or Process ID of the WoW you want to attach to.
+	6 - Call ObjectManager.Initialize and provide it with the pid.
+	7 - Call ObjectManager.Pulse to load objects, and refresh them.
+	
+Enjoy this quality release!
+
+PS. NO, you DON'T need ALL files in the downloaded archive.
