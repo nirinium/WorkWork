@@ -11,7 +11,7 @@ The bot uses a waypoint system for path-finding where points are mapped in the w
 
 The bot offers a looping system as well as a one-way path traversal system. 
 
-It can attack creatures and/or players and defend itself in combat of medium complexity and can perform complex combat rotations if set up correctly. It can also perform abilities and spells outside of combat, as well as drink and eat. It can loot creatures, as well as farm minerals and herbs. 
+It can attack creatures and/or players and defend itself in combat of medium complexity and can perform complex combat rotations if set up correctly. It can also perform abilities and spells outside of combat, as well as drink and eat. It can loot creatures, as well as farm minerals and herbs. It can sell trash to vendors.
 
 If the player character dies, it can release spirit, walk back, resurrect, and continue from where it left off. 
 
