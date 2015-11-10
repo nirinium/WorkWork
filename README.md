@@ -22,7 +22,9 @@ It keeps track of kills, deaths and other relevant stats that make optimizing pa
 ![alt tag](https://cloud.githubusercontent.com/assets/6977074/11063581/01a8a34a-87b8-11e5-8cb1-a49138dc76d9.PNG)
 
 The image above is a screen-shot of how the actual bot UI looks and feels.
-Note that the linear function basically tells the bot after each combat phase if it should stick to exact order of the waypoints or go to the closest point (to make it less loop-y and more human-like). It's not always a good idea to have this off so I have included the option to turn it on.
+Note that the linear function basically tells the bot after each combat phase if it should stick to the exact order of the waypoints or go to the closest point (to make it less loop-y and more human-like). It's not always a good idea to have this off so I have included the option to turn it on.
+
+### I am not actively working on this project anymore.
 
 Memory pointers and offsets not included.
 
