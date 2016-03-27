@@ -19,9 +19,10 @@ If a monster or creature is unreachable or otherwise stuck, it can blacklist it 
 
 It keeps track of kills, deaths and other relevant stats that make optimizing paths easier. It supports multiple classes and multiple characters of each class. Lastly, it has its own path editor.
 
-![alt tag](https://cloud.githubusercontent.com/assets/6977074/11063581/01a8a34a-87b8-11e5-8cb1-a49138dc76d9.PNG)
+![bot1](https://cloud.githubusercontent.com/assets/6977074/14067184/1ca6e0c6-f45f-11e5-8381-e8a4359ced22.png)
+![bot2](https://cloud.githubusercontent.com/assets/6977074/14067185/22ea92fc-f45f-11e5-8fdf-c8e3301b1fde.png)
 
-The image above is a screen-shot of how the actual bot UI looks and feels.
+The images above are screen-shots of how the actual bot UI looks and feels.
 Note that the linear function basically tells the bot after each combat phase if it should stick to the exact order of the waypoints or go to the closest point (to make it less loop-y and more human-like). It's not always a good idea to have this off so I have included the option to turn it on.
 
 ### I am not actively working on this project anymore.
