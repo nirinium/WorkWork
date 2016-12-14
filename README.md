@@ -1,5 +1,7 @@
 # WorkWork
 
+Name is a reference to [Warcraft 3](https://www.youtube.com/watch?v=-y6wXYeZk8A).
+
 This is a bot I created for an outdated version of the game World of Warcraft (2.4.3).
 
 This is my first real interaction with C# and reverse engineering.
