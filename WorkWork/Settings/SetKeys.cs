@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Windows.Input;
 
-
-namespace WorkWork
+namespace WorkWork.Settings
 {
     class SetKeys
     {
-        Key pressedKey;
-        private volatile bool halt = false;
+        private Key _pressedKey;
+        private volatile bool _halt;
         TextBox textBox;
         int value;
         Settings settings;
@@ -27,8 +19,8 @@ namespace WorkWork
         }
         public void DoWork()
         {
-            pressedKey = new Key();
-            while (!halt)
+            _pressedKey = new Key();
+            while (!_halt)
             {
                 foreach (Key key in Enum.GetValues(typeof(Key)))
                 {
@@ -36,28 +28,28 @@ namespace WorkWork
                     {
                         if (Keyboard.IsKeyDown(key))
                         {
-                            pressedKey = key;
+                            _pressedKey = key;
                             break;
                         }
                     }
 
 
                 }
-                if (pressedKey != Key.None)
+                if (_pressedKey != Key.None)
                 {
                     break;
                 }
             }
-            if (!halt)
+            if (!_halt)
             {
                 if (textBox.InvokeRequired)
                 {
-                    textBox.Invoke(new MethodInvoker(delegate { textBox.Text = pressedKey.ToString(); }));
+                    textBox.Invoke(new MethodInvoker(delegate { textBox.Text = _pressedKey.ToString(); }));
 
                 }
                 if (value < 13)
                 {
-                    settings.GeneralKeybinds[value, 1] = pressedKey.ToString();
+                    settings.GeneralKeybinds[value, 1] = _pressedKey.ToString();
                     settings.Save();
                     settings.Changed = true;
                 }
@@ -66,7 +58,7 @@ namespace WorkWork
         }
         public void Halt()
         {
-            halt = true;
+            _halt = true;
         }
     }
 }

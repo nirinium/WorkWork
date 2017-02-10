@@ -1,23 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
-namespace WorkWork
+namespace WorkWork.Settings
 {
     //On-start settings, saved on-exit
 
 
     class Settings
     {
-        private bool changed = false;
+        private bool _changed;
         private string[,] generalKeybinds = new string[13, 2];
         private string[] keyNames = {
                                 "lbutton","rbutton","cancel","mbutton","xbutton1","xbutton2","back","tab","clear","return","shift","control","menu","pause","capital","kana","hangeul","hangul","junja","final",
@@ -39,45 +32,45 @@ namespace WorkWork
             0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,0xb5,0xb6,0xb7,0xba,0xbb,0xbc,0xbd,0xbe,0xbf,0xc0,0xdb,0xdc,0xdd,0xde,0xdf,0xe2,0xe5,0xe7,0xf6,0xf7,0xf8,0xf9,0xfa,0xfb,0xfc,0xfd,0xfe
         };
         private string
-        lastProfile = null,
-        lastSpells = null;
-        private bool skinning = false;
-        private bool ignoreMobs = false;
-        private bool ignorePlayers = false;
-        private int xresolution = 0;
-        private int yresolution = 0;
-        private bool looting = false;
-        private bool linear = false;
-        private bool sell = false;
-        private int sellLoops = 20;
-        private bool mining = false;
-        private bool herbing = false;
+        _lastProfile,
+        _lastSpells;
+        private bool _skinning;
+        private bool _ignoreMobs;
+        private bool _ignorePlayers;
+        private int _xresolution;
+        private int _yresolution;
+        private bool _looting;
+        private bool _linear;
+        private bool _sell;
+        private int _sellLoops = 20;
+        private bool _mining;
+        private bool _herbing;
         public void Load()
         {
-            string[] lines = System.IO.File.ReadAllLines("../Settings.cfg");
+            string[] lines = File.ReadAllLines("../Settings.cfg");
             foreach (string line in lines)
             {
                 if (line.ToLower().Contains("skinning"))
                 {
-                    skinning = true;
+                    _skinning = true;
                 }
                 else if (line.ToLower().Contains("ignoremobs"))
                 {
-                    ignoreMobs = true;
+                    _ignoreMobs = true;
                 }
                 else if (line.ToLower().Contains("ignoreplayers"))
                 {
-                    ignorePlayers = true;
+                    _ignorePlayers = true;
                 }
                 else if (line.ToLower().Contains("lastprofile"))
                 {
                     string[] temp = line.Split('_');
-                    lastProfile = temp[1];
+                    _lastProfile = temp[1];
                 }
                 else if (line.ToLower().Contains("lastspells"))
                 {
                     string[] temp = line.Split('_');
-                    lastSpells = temp[1];
+                    _lastSpells = temp[1];
                 }
                 else if (line.ToLower().Contains("mount"))
                 {
@@ -148,16 +141,16 @@ namespace WorkWork
                 else if (line.ToLower().Contains("xresolution"))
                 {
                     string[] temp = line.Split('_');
-                    xresolution = Convert.ToInt32(temp[1]);
+                    _xresolution = Convert.ToInt32(temp[1]);
                 }
                 else if (line.ToLower().Contains("yresolution"))
                 {
                     string[] temp = line.Split('_');
-                    yresolution = Convert.ToInt32(temp[1]);
+                    _yresolution = Convert.ToInt32(temp[1]);
                 }
                 else if (line.ToLower().Contains("gather"))
                 {
-                    looting = true;
+                    _looting = true;
                 }
                 else if (line.ToLower().Contains("release"))
                 {
@@ -173,24 +166,24 @@ namespace WorkWork
                 }
                 else if (line.ToLower().Contains("linear"))
                 {
-                    linear = true;
+                    _linear = true;
                 }
                 else if (line.ToLower().Contains("sell"))
                 {
-                    sell = true;
+                    _sell = true;
                 }
                 else if (line.ToLower().Contains("sloops"))
                 {
                     string[] temp = line.Split('_');
-                    sellLoops = Convert.ToInt32(temp[1]);
+                    _sellLoops = Convert.ToInt32(temp[1]);
                 }
                 else if (line.ToLower().Contains("herbing"))
                 {
-                    herbing = true;
+                    _herbing = true;
                 }
                 else if (line.ToLower().Contains("mining"))
                 {
-                    mining = true;
+                    _mining = true;
                 }
             }
         }
@@ -199,44 +192,44 @@ namespace WorkWork
         {
             TextWriter tW = new StreamWriter("../Settings.cfg");
             tW.WriteLine("[Settings]");
-            if (looting)
+            if (_looting)
             {
                 tW.WriteLine("gather");
             }
-            if (skinning)
+            if (_skinning)
             {
                 tW.WriteLine("skinning");
             }
-            if (herbing)
+            if (_herbing)
             {
                 tW.WriteLine("herbing");
             }
-            if (mining)
+            if (_mining)
             {
                 tW.WriteLine("mining");
             }
-            if (linear)
+            if (_linear)
             {
                 tW.WriteLine("linear");
             }
-            if (sell)
+            if (_sell)
             {
                 tW.WriteLine("sell");
             }
-            if (sellLoops > -1)
+            if (_sellLoops > -1)
             {
-                tW.WriteLine("sloops_" + sellLoops);
+                tW.WriteLine("sloops_" + _sellLoops);
             }
-            if (lastSpells != null)
+            if (_lastSpells != null)
             {
-                tW.WriteLine("lastspells_" + lastSpells);
+                tW.WriteLine("lastspells_" + _lastSpells);
             }
-            if (lastProfile != null)
+            if (_lastProfile != null)
             {
-                tW.WriteLine("lastprofile_" + lastProfile);
+                tW.WriteLine("lastprofile_" + _lastProfile);
             }
-            tW.WriteLine("xresolution_" + xresolution);
-            tW.WriteLine("yresolution_" + yresolution);
+            tW.WriteLine("xresolution_" + _xresolution);
+            tW.WriteLine("yresolution_" + _yresolution);
             tW.WriteLine("[Keybinds]");
             for (int i = 0; i < generalKeybinds.GetLength(0); i++)
             {
@@ -248,23 +241,23 @@ namespace WorkWork
         public string Profile
         {
           
-            get { return lastProfile; }
+            get { return _lastProfile; }
             
-            set { lastProfile = value; }
+            set { _lastProfile = value; }
         }
         public string Spells
         {
             
-            get { return lastSpells; }
+            get { return _lastSpells; }
             
-            set { lastSpells = value; }
+            set { _lastSpells = value; }
         }
         public bool Skinning
         {
             
-            get { return skinning; }
+            get { return _skinning; }
             
-            set { skinning = value; }
+            set { _skinning = value; }
         }
         public UInt16 GetVKey(string value)
         {
@@ -280,8 +273,8 @@ namespace WorkWork
             {
                 if (value == keyNames[i])
                 {
-                    UInt16 VK = keyValues[i];
-                    return VK;
+                    UInt16 vk = keyValues[i];
+                    return vk;
                 }
             }
             return 0x0;
@@ -304,31 +297,31 @@ namespace WorkWork
         public bool IgnoreMobs
         {
             
-            get { return ignoreMobs; }
+            get { return _ignoreMobs; }
             
-            set { ignoreMobs = value; }
+            set { _ignoreMobs = value; }
         }
         public bool IgnorePlayers
         {
             
-            get { return ignorePlayers; }
+            get { return _ignorePlayers; }
             
-            set { ignorePlayers = value; }
+            set { _ignorePlayers = value; }
            
         }
         public int XResolution
         {
            
-            get { return xresolution; }
+            get { return _xresolution; }
             
-            set { xresolution = value; }
+            set { _xresolution = value; }
         }
         public int YResolution
         {
             
-            get { return yresolution; }
+            get { return _yresolution; }
             
-            set { yresolution = value; }
+            set { _yresolution = value; }
         }
         public string[,] GeneralKeybinds
         {
@@ -338,42 +331,42 @@ namespace WorkWork
         public bool Looting
         {
             
-            get { return looting; }
+            get { return _looting; }
             
-            set { looting = value; }
+            set { _looting = value; }
         }
         public bool Changed
         {
             
-            get { return changed; }
+            get { return _changed; }
             
-            set { changed = value; }
+            set { _changed = value; }
         }
         public bool Linear
         {
-            get { return linear; }
-            set { linear = value; }
+            get { return _linear; }
+            set { _linear = value; }
         }
         public bool Sell
         {
-            get { return sell; }
-            set { sell = value; }
+            get { return _sell; }
+            set { _sell = value; }
         }
         public int SellLoops
         {
-            get { return sellLoops; }
-            set { sellLoops = value; }
+            get { return _sellLoops; }
+            set { _sellLoops = value; }
         }
         public bool Mining
         {
-            get { return mining; }
-            set { mining = value; }
+            get { return _mining; }
+            set { _mining = value; }
 
         }
         public bool Herbing
         {
-            get { return herbing; }
-            set { herbing = value; }
+            get { return _herbing; }
+            set { _herbing = value; }
         }
     }
 }

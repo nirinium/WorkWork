@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WorkWork
+namespace WorkWork.Settings
 {
     class Spells
     {
@@ -22,7 +19,7 @@ namespace WorkWork
         private List<int> enemyHealth = new List<int>();
         public void Load(string value)
         {
-            string[] lines = System.IO.File.ReadAllLines(value);
+            string[] lines = File.ReadAllLines(value);
             foreach (string line in lines)
             {
                 if (line.ToLower().Contains("example") || line.ToLower().Contains("[spells]"))

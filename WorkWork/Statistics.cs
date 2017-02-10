@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Windows.Forms;
-using System.Runtime.CompilerServices;
+﻿using System.Windows.Forms;
 using WorkWork.Bot;
 
 namespace WorkWork
@@ -14,7 +7,7 @@ namespace WorkWork
     {
         Main bot;
         Label mobs, died, averageHealth, averageMana, loopLabel;
-        public bool changed = false;
+        public bool changed;
         public Statistics(Main bot, Label mobs, Label died, Label averageHealth, Label averageMana, Label loopLabel)
         {
             this.bot = bot;
@@ -24,7 +17,7 @@ namespace WorkWork
             this.died = died;
             this.loopLabel = loopLabel;
         }
-        private volatile bool halt = false;
+        private volatile bool _halt;
         public void DoWork()
         {
             //get them
@@ -36,25 +29,30 @@ namespace WorkWork
             
             if (mobs.InvokeRequired)
             {
-                mobs.Invoke(new MethodInvoker(delegate { mobs.Text = mobsText; }));
+                var text = mobsText;
+                mobs.Invoke(new MethodInvoker(delegate { mobs.Text = text; }));
             }
             if (died.InvokeRequired)
             {
-                died.Invoke(new MethodInvoker(delegate { died.Text = diedText; }));
+                var text = diedText;
+                died.Invoke(new MethodInvoker(delegate { died.Text = text; }));
             }
             if (averageHealth.InvokeRequired)
             {
-                averageHealth.Invoke(new MethodInvoker(delegate { averageHealth.Text = averageHealthText; }));
+                var text = averageHealthText;
+                averageHealth.Invoke(new MethodInvoker(delegate { averageHealth.Text = text; }));
             }
             if (averageMana.InvokeRequired)
             {
-                averageMana.Invoke(new MethodInvoker(delegate { averageMana.Text = averageManaText; }));
+                var text = averageManaText;
+                averageMana.Invoke(new MethodInvoker(delegate { averageMana.Text = text; }));
             }
             if (loopLabel.InvokeRequired)
             {
-                loopLabel.Invoke(new MethodInvoker(delegate { loopLabel.Text = loops; }));
+                var loops1 = loops;
+                loopLabel.Invoke(new MethodInvoker(delegate { loopLabel.Text = loops1; }));
             }
-            while (!halt)
+            while (!_halt)
             {
                 if (Changed)
                 {
@@ -65,23 +63,28 @@ namespace WorkWork
                     loops = bot.Loops + "";
                     if (mobs.InvokeRequired)
                     {
-                        mobs.Invoke(new MethodInvoker(delegate { mobs.Text = mobsText; }));
+                        var text = mobsText;
+                        mobs.Invoke(new MethodInvoker(delegate { mobs.Text = text; }));
                     }
                     if (died.InvokeRequired)
                     {
-                        died.Invoke(new MethodInvoker(delegate { died.Text = diedText; }));
+                        var text = diedText;
+                        died.Invoke(new MethodInvoker(delegate { died.Text = text; }));
                     }
                     if (averageHealth.InvokeRequired)
                     {
-                        averageHealth.Invoke(new MethodInvoker(delegate { averageHealth.Text = averageHealthText; }));
+                        var text = averageHealthText;
+                        averageHealth.Invoke(new MethodInvoker(delegate { averageHealth.Text = text; }));
                     }
                     if (averageMana.InvokeRequired)
                     {
-                        averageMana.Invoke(new MethodInvoker(delegate { averageMana.Text = averageManaText; }));
+                        var text = averageManaText;
+                        averageMana.Invoke(new MethodInvoker(delegate { averageMana.Text = text; }));
                     }
                     if (loopLabel.InvokeRequired)
                     {
-                        loopLabel.Invoke(new MethodInvoker(delegate { loopLabel.Text = loops; }));
+                        var loops1 = loops;
+                        loopLabel.Invoke(new MethodInvoker(delegate { loopLabel.Text = loops1; }));
                     }
                     Changed = false;
                 }
@@ -89,7 +92,7 @@ namespace WorkWork
         }
         public void Halt()
         {
-            halt = true;
+            _halt = true;
         }
         public bool Changed
         {

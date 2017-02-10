@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Magic;
+﻿using Magic;
 
 namespace WorkWork.Memory
 {
@@ -11,16 +6,16 @@ namespace WorkWork.Memory
     {
         
         private BlackMagic magic;
-        private uint baseAddress;
+        private uint _baseAddress;
         public Object(uint baseAddress, BlackMagic magic)
         {
-            this.baseAddress = baseAddress;
+            _baseAddress = baseAddress;
             this.magic = magic;
         }
         public uint BaseAddress
         {
-            get { return baseAddress; }
-            set { baseAddress = value; }
+            get { return _baseAddress; }
+            set { _baseAddress = value; }
         }
         public int Type
         {
@@ -29,7 +24,6 @@ namespace WorkWork.Memory
         public virtual ulong Guid
         {
             get { return magic.ReadUInt64(BaseAddress + (uint)TbcOffsets.ObjectOffsets.GuidOffset); }
-            set { return; }
         }
         public virtual float XPosition
         {
