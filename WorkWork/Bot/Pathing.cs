@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Drawing;
 using WorkWork.Memory;
+using WorkWork.Profiles;
 
 namespace WorkWork.Bot
 {

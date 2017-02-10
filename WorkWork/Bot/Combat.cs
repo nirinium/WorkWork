@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Drawing;
 using WorkWork.Memory;
+using WorkWork.Profiles;
 
 namespace WorkWork.Bot
 {
@@ -86,7 +87,7 @@ namespace WorkWork.Bot
                             if (type == 3)
                             {
                                 string name = obj.Name;
-                                foreach (String ignoredMob in profile.getIgnoredMobs())
+                                foreach (String ignoredMob in profile.GetIgnoredMobs())
                                 {
                                     if (name == ignoredMob)
                                     {

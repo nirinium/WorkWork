@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Drawing;
 using WorkWork.Memory;
-
+using WorkWork.Profiles;
 
 
 namespace WorkWork.Bot
@@ -22,9 +22,9 @@ namespace WorkWork.Bot
             this.profile = profile;
             this.spells = spells;
             this.settings = settings;
-            wayPoints = profile.getWaypoints();
-            ghostPoints = profile.getGhostpoints();
-            sellPoints = profile.getSellpoints();
+            wayPoints = profile.GetWaypoints();
+            ghostPoints = profile.GetGhostpoints();
+            sellPoints = profile.GetSellpoints();
 
             objectManager = new ObjectManager(magic);
 

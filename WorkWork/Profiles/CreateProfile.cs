@@ -1,26 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using Magic;
 using System.Windows.Forms;
-using System.Runtime.CompilerServices;
+using Magic;
 using WorkWork.Memory;
 
-namespace WorkWork
+namespace WorkWork.Profiles
 {
     class CreateProfile
     {
-        private volatile bool halt;
-        private volatile bool isWayPoints;
-        private volatile bool isGhostPoints;
-        private volatile bool isSellPoints;
-        private float startingX, startingY, startingZ, currentX, currentY, currentZ, deltaX, deltaY, deltaZ;
+        private volatile bool _halt;
+        private volatile bool _isWayPoints;
+        private volatile bool _isGhostPoints;
+        private volatile bool _isSellPoints;
+        private float _startingX, _startingY, _startingZ, _currentX, _currentY, _currentZ, _deltaX, _deltaY, _deltaZ;
         private BlackMagic magic;
         private Profile profile= new Profile();
-        private string filename;
+        private string _filename;
         private RichTextBox richTextBox;
         public CreateProfile(BlackMagic magic, RichTextBox richTextBox)
         {
@@ -31,127 +25,127 @@ namespace WorkWork
         public void DoWork()
         {
             
-            while (!halt)
+            while (!_halt)
             {
-                if (!halt && isWayPoints)
+                if (!_halt && _isWayPoints)
                 {
-                    startingX = magic.ReadFloat((uint)TbcOffsets.General.PlayerX);
-                    startingY = magic.ReadFloat((uint)TbcOffsets.General.PlayerY);
-                    startingZ = magic.ReadFloat((uint)TbcOffsets.General.PlayerZ);
-                    profile.AddWayPoint(startingX, startingY, startingZ);
+                    _startingX = magic.ReadFloat((uint)TbcOffsets.General.PlayerX);
+                    _startingY = magic.ReadFloat((uint)TbcOffsets.General.PlayerY);
+                    _startingZ = magic.ReadFloat((uint)TbcOffsets.General.PlayerZ);
+                    profile.AddWayPoint(_startingX, _startingY, _startingZ);
                     if (richTextBox.InvokeRequired)
                     {
-                        richTextBox.Invoke(new MethodInvoker(delegate { richTextBox.AppendText("Added waypoint at x: " + startingX + ", y: " + startingY + ", z: " + startingZ + Environment.NewLine); }));
+                        richTextBox.Invoke(new MethodInvoker(delegate { richTextBox.AppendText("Added waypoint at x: " + _startingX + ", y: " + _startingY + ", z: " + _startingZ + Environment.NewLine); }));
                     }
                     
-                    currentX = startingX;
-                    currentY = startingY;
-                    currentZ = startingZ;
-                    deltaX = 0;
-                    deltaY = 0;
-                    deltaZ = 0;
-                    while (!halt && isWayPoints)
+                    _currentX = _startingX;
+                    _currentY = _startingY;
+                    _currentZ = _startingZ;
+                    _deltaX = 0;
+                    _deltaY = 0;
+                    _deltaZ = 0;
+                    while (!_halt && _isWayPoints)
                     {
-                        while (!halt && (float)Math.Sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) < 15 && isWayPoints)
+                        while (!_halt && (float)Math.Sqrt(_deltaX * _deltaX + _deltaY * _deltaY + _deltaZ * _deltaZ) < 15 && _isWayPoints)
                         {
-                            currentX = magic.ReadFloat((uint)TbcOffsets.General.PlayerX);
-                            currentY = magic.ReadFloat((uint)TbcOffsets.General.PlayerY);
-                            currentZ = magic.ReadFloat((uint)TbcOffsets.General.PlayerZ);
-                            deltaX = currentX - startingX;
-                            deltaY = currentY - startingY;
-                            deltaZ = currentZ - startingZ;
+                            _currentX = magic.ReadFloat((uint)TbcOffsets.General.PlayerX);
+                            _currentY = magic.ReadFloat((uint)TbcOffsets.General.PlayerY);
+                            _currentZ = magic.ReadFloat((uint)TbcOffsets.General.PlayerZ);
+                            _deltaX = _currentX - _startingX;
+                            _deltaY = _currentY - _startingY;
+                            _deltaZ = _currentZ - _startingZ;
                         }
-                        profile.AddWayPoint(currentX, currentY, currentZ);
-                        startingX = currentX;
-                        startingY = currentY;
-                        startingZ = currentZ;
+                        profile.AddWayPoint(_currentX, _currentY, _currentZ);
+                        _startingX = _currentX;
+                        _startingY = _currentY;
+                        _startingZ = _currentZ;
                         if (richTextBox.InvokeRequired)
                         {
-                            richTextBox.Invoke(new MethodInvoker(delegate { richTextBox.AppendText("Added waypoint at x: " + startingX + ", y: " + startingY + ", z: " + startingZ + Environment.NewLine); }));
+                            richTextBox.Invoke(new MethodInvoker(delegate { richTextBox.AppendText("Added waypoint at x: " + _startingX + ", y: " + _startingY + ", z: " + _startingZ + Environment.NewLine); }));
                         }
-                        deltaX = 0;
-                        deltaY = 0;
-                        deltaZ = 0;
+                        _deltaX = 0;
+                        _deltaY = 0;
+                        _deltaZ = 0;
                     }
                 }
-                else if (!halt && isGhostPoints)
+                else if (!_halt && _isGhostPoints)
                 {
-                    startingX = magic.ReadFloat((uint)TbcOffsets.General.PlayerX);
-                    startingY = magic.ReadFloat((uint)TbcOffsets.General.PlayerY);
-                    startingZ = magic.ReadFloat((uint)TbcOffsets.General.PlayerZ);
-                    profile.AddGhostPoint(startingX, startingY, startingZ);
+                    _startingX = magic.ReadFloat((uint)TbcOffsets.General.PlayerX);
+                    _startingY = magic.ReadFloat((uint)TbcOffsets.General.PlayerY);
+                    _startingZ = magic.ReadFloat((uint)TbcOffsets.General.PlayerZ);
+                    profile.AddGhostPoint(_startingX, _startingY, _startingZ);
                     if (richTextBox.InvokeRequired)
                     {
-                        richTextBox.Invoke(new MethodInvoker(delegate { richTextBox.AppendText("Added ghostpoint at x: " + startingX + ", y: " + startingY + ", z: " + startingZ + Environment.NewLine); }));
+                        richTextBox.Invoke(new MethodInvoker(delegate { richTextBox.AppendText("Added ghostpoint at x: " + _startingX + ", y: " + _startingY + ", z: " + _startingZ + Environment.NewLine); }));
                     }
-                    currentX = startingX;
-                    currentY = startingY;
-                    currentZ = startingZ;
-                    deltaX = 0;
-                    deltaY = 0;
-                    deltaZ = 0;
-                    while (!halt && isGhostPoints)
+                    _currentX = _startingX;
+                    _currentY = _startingY;
+                    _currentZ = _startingZ;
+                    _deltaX = 0;
+                    _deltaY = 0;
+                    _deltaZ = 0;
+                    while (!_halt && _isGhostPoints)
                     {
-                        while (!halt && (float)Math.Sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) < 15 && isGhostPoints)
+                        while (!_halt && (float)Math.Sqrt(_deltaX * _deltaX + _deltaY * _deltaY + _deltaZ * _deltaZ) < 15 && _isGhostPoints)
                         {
-                            currentX = magic.ReadFloat((uint)TbcOffsets.General.PlayerX);
-                            currentY = magic.ReadFloat((uint)TbcOffsets.General.PlayerY);
-                            currentZ = magic.ReadFloat((uint)TbcOffsets.General.PlayerZ);
-                            deltaX = currentX - startingX;
-                            deltaY = currentY - startingY;
-                            deltaZ = currentZ - startingZ;
+                            _currentX = magic.ReadFloat((uint)TbcOffsets.General.PlayerX);
+                            _currentY = magic.ReadFloat((uint)TbcOffsets.General.PlayerY);
+                            _currentZ = magic.ReadFloat((uint)TbcOffsets.General.PlayerZ);
+                            _deltaX = _currentX - _startingX;
+                            _deltaY = _currentY - _startingY;
+                            _deltaZ = _currentZ - _startingZ;
                         }
-                        profile.AddGhostPoint(currentX, currentY, currentZ);
-                        startingX = currentX;
-                        startingY = currentY;
-                        startingZ = currentZ;
+                        profile.AddGhostPoint(_currentX, _currentY, _currentZ);
+                        _startingX = _currentX;
+                        _startingY = _currentY;
+                        _startingZ = _currentZ;
                         if (richTextBox.InvokeRequired)
                         {
-                            richTextBox.Invoke(new MethodInvoker(delegate { richTextBox.AppendText("Added ghostpoint at x: " + startingX + ", y: " + startingY + ", z: " + startingZ + Environment.NewLine); }));
+                            richTextBox.Invoke(new MethodInvoker(delegate { richTextBox.AppendText("Added ghostpoint at x: " + _startingX + ", y: " + _startingY + ", z: " + _startingZ + Environment.NewLine); }));
                         }
-                        deltaX = 0;
-                        deltaY = 0;
-                        deltaZ = 0;
+                        _deltaX = 0;
+                        _deltaY = 0;
+                        _deltaZ = 0;
                     }
                 }
-                else if (!halt && isSellPoints)
+                else if (!_halt && _isSellPoints)
                 {
-                    startingX = magic.ReadFloat((uint)TbcOffsets.General.PlayerX);
-                    startingY = magic.ReadFloat((uint)TbcOffsets.General.PlayerY);
-                    startingZ = magic.ReadFloat((uint)TbcOffsets.General.PlayerZ);
-                    profile.AddSellPoint(startingX, startingY, startingZ);
+                    _startingX = magic.ReadFloat((uint)TbcOffsets.General.PlayerX);
+                    _startingY = magic.ReadFloat((uint)TbcOffsets.General.PlayerY);
+                    _startingZ = magic.ReadFloat((uint)TbcOffsets.General.PlayerZ);
+                    profile.AddSellPoint(_startingX, _startingY, _startingZ);
                     if (richTextBox.InvokeRequired)
                     {
-                        richTextBox.Invoke(new MethodInvoker(delegate { richTextBox.AppendText("Added sellpoint at x: " + startingX + ", y: " + startingY + ", z: " + startingZ + Environment.NewLine); }));
+                        richTextBox.Invoke(new MethodInvoker(delegate { richTextBox.AppendText("Added sellpoint at x: " + _startingX + ", y: " + _startingY + ", z: " + _startingZ + Environment.NewLine); }));
                     }
-                    currentX = startingX;
-                    currentY = startingY;
-                    currentZ = startingZ;
-                    deltaX = 0;
-                    deltaY = 0;
-                    deltaZ = 0;
-                    while (!halt && isSellPoints)
+                    _currentX = _startingX;
+                    _currentY = _startingY;
+                    _currentZ = _startingZ;
+                    _deltaX = 0;
+                    _deltaY = 0;
+                    _deltaZ = 0;
+                    while (!_halt && _isSellPoints)
                     {
-                        while (!halt && (float)Math.Sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) < 15 && isSellPoints)
+                        while (!_halt && (float)Math.Sqrt(_deltaX * _deltaX + _deltaY * _deltaY + _deltaZ * _deltaZ) < 15 && _isSellPoints)
                         {
-                            currentX = magic.ReadFloat((uint)TbcOffsets.General.PlayerX);
-                            currentY = magic.ReadFloat((uint)TbcOffsets.General.PlayerY);
-                            currentZ = magic.ReadFloat((uint)TbcOffsets.General.PlayerZ);
-                            deltaX = currentX - startingX;
-                            deltaY = currentY - startingY;
-                            deltaZ = currentZ - startingZ;
+                            _currentX = magic.ReadFloat((uint)TbcOffsets.General.PlayerX);
+                            _currentY = magic.ReadFloat((uint)TbcOffsets.General.PlayerY);
+                            _currentZ = magic.ReadFloat((uint)TbcOffsets.General.PlayerZ);
+                            _deltaX = _currentX - _startingX;
+                            _deltaY = _currentY - _startingY;
+                            _deltaZ = _currentZ - _startingZ;
                         }
-                        profile.AddSellPoint(currentX, currentY, currentZ);
-                        startingX = currentX;
-                        startingY = currentY;
-                        startingZ = currentZ;
+                        profile.AddSellPoint(_currentX, _currentY, _currentZ);
+                        _startingX = _currentX;
+                        _startingY = _currentY;
+                        _startingZ = _currentZ;
                         if (richTextBox.InvokeRequired)
                         {
-                            richTextBox.Invoke(new MethodInvoker(delegate { richTextBox.AppendText("Added sellpoint at x: " + startingX + ", y: " + startingY + ", z: " + startingZ + Environment.NewLine); }));
+                            richTextBox.Invoke(new MethodInvoker(delegate { richTextBox.AppendText("Added sellpoint at x: " + _startingX + ", y: " + _startingY + ", z: " + _startingZ + Environment.NewLine); }));
                         }
-                        deltaX = 0;
-                        deltaY = 0;
-                        deltaZ = 0;
+                        _deltaX = 0;
+                        _deltaY = 0;
+                        _deltaZ = 0;
                     }
                 }
             }
@@ -162,27 +156,27 @@ namespace WorkWork
         {
             if (value == 0)
             {
-                isWayPoints = !isWayPoints;
+                _isWayPoints = !_isWayPoints;
             }
             else if (value == 1)
             {
-                isGhostPoints = !isGhostPoints;
+                _isGhostPoints = !_isGhostPoints;
             }
             else
             {
-                isSellPoints = !isSellPoints;
+                _isSellPoints = !_isSellPoints;
             }
         }
         public void Halt()
         {
-            halt = true;
-            isWayPoints = false;
-            isGhostPoints = false;
-            isSellPoints = false;            
+            _halt = true;
+            _isWayPoints = false;
+            _isGhostPoints = false;
+            _isSellPoints = false;            
         }
-        public void save()
+        public void Save()
         {
-            profile.Save(filename);
+            profile.Save(_filename);
         }
         public bool Loop
         {
@@ -196,21 +190,21 @@ namespace WorkWork
         }
         public void AddMountPoint()
         {
-            startingX = magic.ReadFloat((uint)TbcOffsets.General.PlayerX);
-            startingY = magic.ReadFloat((uint)TbcOffsets.General.PlayerY);
-            startingZ = magic.ReadFloat((uint)TbcOffsets.General.PlayerZ);
-            if (isWayPoints)
+            _startingX = magic.ReadFloat((uint)TbcOffsets.General.PlayerX);
+            _startingY = magic.ReadFloat((uint)TbcOffsets.General.PlayerY);
+            _startingZ = magic.ReadFloat((uint)TbcOffsets.General.PlayerZ);
+            if (_isWayPoints)
             {
-                profile.AddMountPoint(startingX, startingY, startingZ,0);
+                profile.AddMountPoint(_startingX, _startingY, _startingZ,0);
             }
-            else if (isSellPoints)
+            else if (_isSellPoints)
             {
-                profile.AddMountPoint(startingX, startingY, startingZ, 1);
+                profile.AddMountPoint(_startingX, _startingY, _startingZ, 1);
             }
             
             if (richTextBox.InvokeRequired)
             {
-                richTextBox.Invoke(new MethodInvoker(delegate { richTextBox.AppendText("Added mountpoint at x: " + startingX + ", y: " + startingY + ", z: " + startingZ + Environment.NewLine); }));
+                richTextBox.Invoke(new MethodInvoker(delegate { richTextBox.AppendText("Added mountpoint at x: " + _startingX + ", y: " + _startingY + ", z: " + _startingZ + Environment.NewLine); }));
             }
         }
         public void AddIgnoredMob(string value)
@@ -223,8 +217,8 @@ namespace WorkWork
         }
         public string FileName
         {
-            get { return filename; }
-            set { filename = value; }
+            get { return _filename; }
+            set { _filename = value; }
         }
         public int Ghostpoint
         {

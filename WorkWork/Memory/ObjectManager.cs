@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Magic;
 
 namespace WorkWork.Memory
 {
     class ObjectManager
     {
-        private Object player;
-        private bool isPlayer;
+        private Object _player;
+        private bool _isPlayer;
         private BlackMagic magic;
         public ObjectManager(BlackMagic magic)
         {
@@ -19,21 +15,21 @@ namespace WorkWork.Memory
         private List<Object> Objects = new List<Object>();
         public void PopulateList()
         {
-            uint ClientConnection = magic.ReadUInt((uint)TbcOffsets.General.ClientConnection);
-            ClientConnection = magic.ReadUInt(ClientConnection + (uint)TbcOffsets.ObjectManagerOffsets.ObjectManagerOffset);
-            uint nextObject = magic.ReadUInt(ClientConnection + (uint)TbcOffsets.ObjectManagerOffsets.FirstObject);
+            uint clientConnection = magic.ReadUInt((uint)TbcOffsets.General.ClientConnection);
+            clientConnection = magic.ReadUInt(clientConnection + (uint)TbcOffsets.ObjectManagerOffsets.ObjectManagerOffset);
+            uint nextObject = magic.ReadUInt(clientConnection + (uint)TbcOffsets.ObjectManagerOffsets.FirstObject);
             Objects.Clear();
-            isPlayer = false;
+            _isPlayer = false;
             while ((nextObject != 0) && ((nextObject & 1) == 0))
             {
 
                 Object obj = new Object(nextObject, magic);
                 Objects.Add(obj);
                 nextObject = magic.ReadUInt(nextObject + (uint)TbcOffsets.ObjectManagerOffsets.NextObject);
-                if (obj.Type == 4 && !isPlayer)
+                if (obj.Type == 4 && !_isPlayer)
                 {
-                    player = obj;
-                    isPlayer = true;
+                    _player = obj;
+                    _isPlayer = true;
                 }
             }
         }
@@ -43,7 +39,7 @@ namespace WorkWork.Memory
         }
         public Object GetPlayer()
         {
-            return player;
+            return _player;
         }
     }
 }

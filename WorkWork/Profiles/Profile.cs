@@ -1,30 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
-using System.IO;
 using System.Globalization;
+using System.IO;
 
-namespace WorkWork
+namespace WorkWork.Profiles
 {
     class Profile
     {
         private List<float[]> wayPoints = new List<float[]>();
         private List<float[]> ghostPoints = new List<float[]>();
         private List<float[]> sellPoints = new List<float[]>();
-        private bool loop=false;
-        private bool isWaySet=false;
-        private bool isGhostSet=false;
-        private bool isSellSet=false;
-        private bool ignoreZ = true;
+        private bool _loop;
+        private bool _isWaySet;
+        private bool _isGhostSet;
+        private bool _isSellSet;
+        private bool _ignoreZ = true;
         private List<string> ignoredMobs = new List<string>();
         private List<ulong> ignoredMobsGuid = new List<ulong>();
-        private int ghostpaths = 0;
+        private int _ghostpaths;
         public void Load(string value)
         {
-            string[] lines = System.IO.File.ReadAllLines(value);
+            string[] lines = File.ReadAllLines(value);
             foreach (string line in lines)
             {
                 if (line.ToLower().Contains("w_"))
@@ -36,7 +32,7 @@ namespace WorkWork
                     temp[2] = float.Parse(words[4], CultureInfo.InvariantCulture.NumberFormat);
                     temp[3] = float.Parse(words[5], CultureInfo.InvariantCulture.NumberFormat);
                     wayPoints.Add(temp);
-                    isWaySet = true;
+                    _isWaySet = true;
                 }
                 else if (line.ToLower().Contains("g_"))
                 {
@@ -47,7 +43,7 @@ namespace WorkWork
                     temp[2] = float.Parse(words[4], CultureInfo.InvariantCulture.NumberFormat);
                     temp[3] = float.Parse(words[5], CultureInfo.InvariantCulture.NumberFormat);
                     ghostPoints.Add(temp);
-                    isGhostSet = true;
+                    _isGhostSet = true;
                 }
                 else if (line.ToLower().Contains("s_"))
                 {
@@ -58,15 +54,15 @@ namespace WorkWork
                     temp[2] = float.Parse(words[4], CultureInfo.InvariantCulture.NumberFormat);
                     temp[3] = float.Parse(words[5], CultureInfo.InvariantCulture.NumberFormat);
                     sellPoints.Add(temp);
-                    isSellSet = true;
+                    _isSellSet = true;
                 }
                 else if (line.ToLower().Contains("loop"))
                 {
-                    loop = true;
+                    _loop = true;
                 }
                 else if (line.ToLower().Contains("ignorez"))
                 {
-                    ignoreZ = true;
+                    _ignoreZ = true;
                 }
                 else if (line.ToLower().Contains("ignoredmob_"))
                 {
@@ -76,7 +72,7 @@ namespace WorkWork
                 else if (line.ToLower().Contains("ghostpath_"))
                 {
                     string[] words = line.Split('_');
-                    ghostpaths = Convert.ToInt32(words[1]);
+                    _ghostpaths = Convert.ToInt32(words[1]);
                 }
                 else if (line.ToLower().Contains("ignoredmobguid_"))
                 {
@@ -89,15 +85,15 @@ namespace WorkWork
         {
             TextWriter tW = new StreamWriter(value);
             tW.WriteLine("[Profile]");
-            if (loop)
+            if (_loop)
             {
                 tW.WriteLine("loop");
             }
-            if (ignoreZ)
+            if (_ignoreZ)
             {
                 tW.WriteLine("ignorez");
             }
-            tW.WriteLine("ghostpath_" + ghostpaths);
+            tW.WriteLine("ghostpath_" + _ghostpaths);
             tW.WriteLine("[IgnoredMobs]");
             if (ignoredMobs.Count > 0)
             {
@@ -166,7 +162,7 @@ namespace WorkWork
         public void AddGhostPoint(float x, float y, float z)
         {
            
-            float[] temp = { x, y, z, ghostpaths };
+            float[] temp = { x, y, z, _ghostpaths };
             ghostPoints.Add(temp);
         }
         public void AddSellPoint(float x, float y, float z)
@@ -184,49 +180,49 @@ namespace WorkWork
         }
         public bool Loop
         {
-            get { return loop; }
-            set { loop = value; }
+            get { return _loop; }
+            set { _loop = value; }
         }
         public bool IsWaySet
         {
-            get { return isWaySet; }
-            set { isWaySet=value;}
+            get { return _isWaySet; }
+            set { _isWaySet=value;}
         }
         public bool IsGhostSet
         {
-            get { return isGhostSet; }
-            set { isGhostSet=value;}
+            get { return _isGhostSet; }
+            set { _isGhostSet=value;}
         }
         public bool IsSellSet
         {
-            get { return isSellSet; }
-            set { isSellSet=value;}
+            get { return _isSellSet; }
+            set { _isSellSet=value;}
         }
         public bool IgnoreZ
         {
-            get { return ignoreZ; }
-            set { ignoreZ = value; }
+            get { return _ignoreZ; }
+            set { _ignoreZ = value; }
         }
-        public List<float[]> getWaypoints()
+        public List<float[]> GetWaypoints()
         {
             return wayPoints;
         }
-        public List<float[]> getGhostpoints()
+        public List<float[]> GetGhostpoints()
         {
             return ghostPoints;
         }
-        public List<float[]> getSellpoints()
+        public List<float[]> GetSellpoints()
         {
             return sellPoints;
         }
-        public List<string> getIgnoredMobs()
+        public List<string> GetIgnoredMobs()
         {
             return ignoredMobs;
         }
         public int Ghostpaths
         {
-            get { return ghostpaths; }
-            set { ghostpaths = value; }
+            get { return _ghostpaths; }
+            set { _ghostpaths = value; }
         }
         public List<ulong> getIgnoredMobsGuid
         {

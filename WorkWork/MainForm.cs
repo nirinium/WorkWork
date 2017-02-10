@@ -13,6 +13,8 @@ using System.Diagnostics;
 using System.IO;
 using WorkWork.Bot;
 using WorkWork.Memory;
+using WorkWork.Profiles;
+using WorkWork.Settings;
 
 namespace WorkWork
 {
@@ -483,7 +485,7 @@ namespace WorkWork
                 {
                     newProfile.FileName = filename;
                     newProfile.Halt();
-                    newProfile.save();
+                    newProfile.Save();
 
                 }
                 catch (Exception ex)
