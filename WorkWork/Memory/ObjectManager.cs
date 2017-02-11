@@ -3,39 +3,37 @@ using Magic;
 
 namespace WorkWork.Memory
 {
-    class ObjectManager
+    internal class ObjectManager
     {
         private Object _player;
         private bool _isPlayer;
-        private BlackMagic magic;
+        private readonly BlackMagic _magic;
         public ObjectManager(BlackMagic magic)
         {
-            this.magic = magic;
+            _magic = magic;
         }
-        private List<Object> Objects = new List<Object>();
+        private readonly List<Object> _objects = new List<Object>();
         public void PopulateList()
         {
-            uint clientConnection = magic.ReadUInt((uint)TbcOffsets.General.ClientConnection);
-            clientConnection = magic.ReadUInt(clientConnection + (uint)TbcOffsets.ObjectManagerOffsets.ObjectManagerOffset);
-            uint nextObject = magic.ReadUInt(clientConnection + (uint)TbcOffsets.ObjectManagerOffsets.FirstObject);
-            Objects.Clear();
+            var clientConnection = _magic.ReadUInt((uint)TbcOffsets.General.ClientConnection);
+            clientConnection = _magic.ReadUInt(clientConnection + (uint)TbcOffsets.ObjectManagerOffsets.ObjectManagerOffset);
+            var nextObject = _magic.ReadUInt(clientConnection + (uint)TbcOffsets.ObjectManagerOffsets.FirstObject);
+            _objects.Clear();
             _isPlayer = false;
             while ((nextObject != 0) && ((nextObject & 1) == 0))
             {
 
-                Object obj = new Object(nextObject, magic);
-                Objects.Add(obj);
-                nextObject = magic.ReadUInt(nextObject + (uint)TbcOffsets.ObjectManagerOffsets.NextObject);
-                if (obj.Type == 4 && !_isPlayer)
-                {
-                    _player = obj;
-                    _isPlayer = true;
-                }
+                var obj = new Object(nextObject, _magic);
+                _objects.Add(obj);
+                nextObject = _magic.ReadUInt(nextObject + (uint)TbcOffsets.ObjectManagerOffsets.NextObject);
+                if (obj.Type != 4 || _isPlayer) continue;
+                _player = obj;
+                _isPlayer = true;
             }
         }
         public List<Object> GetObjects()
         {
-            return Objects;
+            return _objects;
         }
         public Object GetPlayer()
         {

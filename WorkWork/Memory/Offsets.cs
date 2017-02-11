@@ -1,6 +1,6 @@
 ﻿namespace WorkWork.Memory
 {
-    class TbcOffsets
+    internal class TbcOffsets
     {
         public enum CombatState
         {

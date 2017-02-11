@@ -4,18 +4,18 @@ using System.Windows.Input;
 
 namespace WorkWork.Settings
 {
-    class SetKeys
+    internal class SetKeys
     {
         private Key _pressedKey;
         private volatile bool _halt;
-        TextBox textBox;
-        int value;
-        Settings settings;
+        private readonly TextBox _textBox;
+        private readonly int _value;
+        private readonly Settings _settings;
         public SetKeys(TextBox textBox, int value, Settings settings)
         {
-            this.textBox = textBox;
-            this.value = value;
-            this.settings = settings;
+            _textBox = textBox;
+            _value = value;
+            _settings = settings;
         }
         public void DoWork()
         {
@@ -24,37 +24,26 @@ namespace WorkWork.Settings
             {
                 foreach (Key key in Enum.GetValues(typeof(Key)))
                 {
-                    if (key != 0)
-                    {
-                        if (Keyboard.IsKeyDown(key))
-                        {
-                            _pressedKey = key;
-                            break;
-                        }
-                    }
-
-
+                    if (key == 0) continue;
+                    if (!Keyboard.IsKeyDown(key)) continue;
+                    _pressedKey = key;
+                    break;
                 }
                 if (_pressedKey != Key.None)
                 {
                     break;
                 }
             }
-            if (!_halt)
+            if (_halt) return;
+            if (_textBox.InvokeRequired)
             {
-                if (textBox.InvokeRequired)
-                {
-                    textBox.Invoke(new MethodInvoker(delegate { textBox.Text = _pressedKey.ToString(); }));
-
-                }
-                if (value < 13)
-                {
-                    settings.GeneralKeybinds[value, 1] = _pressedKey.ToString();
-                    settings.Save();
-                    settings.Changed = true;
-                }
+                _textBox.Invoke(new MethodInvoker(delegate { _textBox.Text = _pressedKey.ToString(); }));
 
             }
+            if (_value >= 13) return;
+            _settings.GeneralKeybinds[_value, 1] = _pressedKey.ToString();
+            _settings.Save();
+            _settings.Changed = true;
         }
         public void Halt()
         {
